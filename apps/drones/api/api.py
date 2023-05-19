@@ -1,0 +1,49 @@
+from rest_framework.response import Response
+#from rest_framework.views import APIView
+from rest_framework.decorators import api_view
+from rest_framework import status      
+from apps.drones.api.serializers import DroneSerializer
+from apps.drones.models import Drone
+from apps.drones.api.serializers import MedicationSerializer
+from apps.drones.models import Medication
+
+
+@api_view(['GET', 'POST']) 
+def drone_api_view(request):
+    
+    if request.method == 'GET':
+        users = Drone.objects.all()
+        drone_serializer = DroneSerializer(users, many=True)
+        return Response(drone_serializer.data, status=status.HTTP_200_OK)
+
+    if request.method == 'POST':
+        drone_serializer = DroneSerializer(data=request.data)
+        if drone_serializer.is_valid():
+            drone_serializer.save()
+            return Response(drone_serializer.data, status=status.HTTP_201_CREATED)
+        return Response(drone_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def drone_detail_api_view(request, sn=None):
+
+    drone = Drone.objects.filter(serial_number=sn).first()
+    if drone:
+        if request.method == 'GET':
+            drone_serializer = DroneSerializer(drone)
+            return Response(drone_serializer.data, status=status.HTTP_200_OK)
+        
+        elif request.method == 'PUT':
+            drone_serializer = DroneSerializer(drone, data=request.data)
+            if drone_serializer.is_valid():
+                drone_serializer.save()
+                return Response(drone_serializer.data, status=status.HTTP_200_OK)
+            return Response(drone_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        elif request.method == 'DELETE':
+            drone.delete()
+            return Response({'message': 'Drone removed successfull.'}, status=status.HTTP_200_OK)
+    return Response({'message': "Can't find drone"}, status=status.HTTP_404_NOT_FOUND)
+
+
+
