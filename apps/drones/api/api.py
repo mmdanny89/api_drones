@@ -12,8 +12,8 @@ from apps.drones.models import Medication
 def drone_api_view(request):
     
     if request.method == 'GET':
-        users = Drone.objects.all()
-        drone_serializer = DroneSerializer(users, many=True)
+        drones = Drone.objects.all()
+        drone_serializer = DroneSerializer(drones, many=True)
         return Response(drone_serializer.data, status=status.HTTP_200_OK)
 
     if request.method == 'POST':
@@ -46,4 +46,39 @@ def drone_detail_api_view(request, sn=None):
     return Response({'message': "Can't find drone"}, status=status.HTTP_404_NOT_FOUND)
 
 
+@api_view(['GET', 'POST']) 
+def medication_api_view(request):
+    
+    if request.method == 'GET':
+        medicationes = Drone.objects.all()
+        medication_serializer = MedicationSerializer(medicationes, many=True)
+        return Response(medication_serializer.data, status=status.HTTP_200_OK)
 
+    if request.method == 'POST':
+        medication_serializer = MedicationSerializer(data=request.data)
+        if medication_serializer.is_valid():
+            medication_serializer.save()
+            return Response(medication_serializer.data, status=status.HTTP_201_CREATED)
+        return Response(medication_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def medication_detail_api_view(request, sn=None):
+
+    medication = Drone.objects.filter(serial_number=sn).first()
+    if medication:
+        if request.method == 'GET':
+            medication_serializer = MedicationSerializer(medication)
+            return Response(medication_serializer.data, status=status.HTTP_200_OK)
+        
+        elif request.method == 'PUT':
+            medication_serializer = MedicationSerializer(medication, data=request.data)
+            if medication_serializer.is_valid():
+                medication_serializer.save()
+                return Response(medication_serializer.data, status=status.HTTP_200_OK)
+            return Response(medication_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        elif request.method == 'DELETE':
+            medication.delete()
+            return Response({'message': 'Medication removed successfull.'}, status=status.HTTP_200_OK)
+    return Response({'message': "Can't find Medication"}, status=status.HTTP_404_NOT_FOUND)
