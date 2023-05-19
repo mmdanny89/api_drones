@@ -11,6 +11,6 @@ path('user/', UserAPIView.as_view(), name='user_api')
 
 urlpatterns = [
     path('drone/', drone_api_view, name='drones_api'),
-    path('drone/<str:pk>/', drone_detail_api_view, name='drones_detail_api'),
+    path('drone/<str:sn>/', drone_detail_api_view, name='drones_detail_api'),
     
 ]
