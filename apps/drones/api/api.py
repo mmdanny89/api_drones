@@ -63,9 +63,9 @@ def medication_api_view(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def medication_detail_api_view(request, sn=None):
+def medication_detail_api_view(request, name=None):
 
-    medication = Drone.objects.filter(serial_number=sn).first()
+    medication = Drone.objects.filter(serial_number=name).first()
     if medication:
         if request.method == 'GET':
             medication_serializer = MedicationSerializer(medication)
