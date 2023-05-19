@@ -40,6 +40,7 @@ class Drone(models.Model):
     weight_limit = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(500)])
     battery_capacity = models.DecimalField(max_digits=3, decimal_places=0, default=Decimal(0), validators=[MinValueValidator(1), MaxValueValidator(100)])
     status = models.CharField(choices=DroneStatusChoices.choices, default=DroneStatusChoices.IDLE, blank=False, null=False)
+    medicationes = models.ManyToManyField(Medication)
 
     class Meta:
        verbose_name_plural = "Drones"
