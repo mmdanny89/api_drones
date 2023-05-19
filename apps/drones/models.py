@@ -36,10 +36,10 @@ class Drone(models.Model):
 
        
     serial_number = models.CharField(max_length=100, unique=True, primary_key=True)
-    model = models.CharField(choices=DroneModelChoices.choices, default=DroneModelChoices.LIGHTWEIGHT, blank=False, null=False)
+    model = models.CharField(choices=DroneModelChoices.choices, default=DroneModelChoices.LIGHTWEIGHT, blank=False, null=False, max_length=15)
     weight_limit = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(500)])
     battery_capacity = models.DecimalField(max_digits=3, decimal_places=0, default=Decimal(0), validators=[MinValueValidator(1), MaxValueValidator(100)])
-    status = models.CharField(choices=DroneStatusChoices.choices, default=DroneStatusChoices.IDLE, blank=False, null=False)
+    status = models.CharField(choices=DroneStatusChoices.choices, default=DroneStatusChoices.IDLE, blank=False, null=False, max_length=10)
     medicationes = models.ManyToManyField(Medication)
 
     class Meta:
