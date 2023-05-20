@@ -1,0 +1,22 @@
+{
+    "drones":[
+        {"serial_number":"dr-wg-dm-aa", "model":"Lightweight", "weight_limit":"200", "battery_capacity":"80", "status":"IDLE"},
+        {"serial_number":"dr-wg-dm-ab", "model":"Middleweight", "weight_limit":"300", "battery_capacity":"90", "status":"IDLE"},
+        {"serial_number":"dr-wg-dm-ac", "model":"Cruiserweight", "weight_limit":"400", "battery_capacity":"33", "status":"IDLE"},
+        {"serial_number":"dr-wg-dm-ad", "model":"Lightweight", "weight_limit":"200", "battery_capacity":"50", "status":"IDLE"},
+        {"serial_number":"dr-wg-dm-ae", "model":"Cruiserweight", "weight_limit":"400", "battery_capacity":"100", "status":"IDLE"},
+        {"serial_number":"dr-wg-dm-af", "model":"Heavyweight", "weight_limit":"500", "battery_capacity":"17", "status":"IDLE"},
+        {"serial_number":"dr-wg-dm-ag", "model":"Lightweight", "weight_limit":"200", "battery_capacity":"45", "status":"IDLE"},
+        {"serial_number":"dr-wg-dm-ah", "model":"Heavyweight", "weight_limit":"500", "battery_capacity":"20", "status":"IDLE"},
+        {"serial_number":"dr-wg-dm-ai", "model":"Lightweight", "weight_limit":"200", "battery_capacity":"10", "status":"IDLE"},
+        {"serial_number":"dr-wg-dm-aj", "model":"Middleweight", "weight_limit":"300", "battery_capacity":"36", "status":"IDLE"}
+
+    ],
+    "medications": [
+        {"code":"MED_01", "name":"Med-1", "weight":"100", "image": null},
+        {"code":"MED_02", "name":"Med-2", "weight":"100", "image": null},
+        {"code":"MED_03", "name":"Med-3", "weight":"100", "image": null},
+        {"code":"MED_04", "name":"Med-4", "weight":"100", "image": null},
+        {"code":"MED_05", "name":"Med-5", "weight":"100", "image": null}
+    ]
+}
