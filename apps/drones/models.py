@@ -47,3 +47,5 @@ class Drone(models.Model):
     def __str__(self):
         return self.serial_number
 
+    def get_battery_capacity(self):
+        return str(self.battery_capacity) + '%'
