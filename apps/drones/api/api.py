@@ -65,9 +65,9 @@ def medication_api_view(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def medication_detail_api_view(request, name=None):
+def medication_detail_api_view(request, code=None):
 
-    medication = Medication.objects.filter(serial_number=name).first()
+    medication = Medication.objects.filter(code=code).first()
     if medication:
         if request.method == 'GET':
             medication_serializer = MedicationSerializer(medication)
