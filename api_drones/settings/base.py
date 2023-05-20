@@ -45,10 +45,8 @@ LOCAL_APPS = [
 
 THIRD_APPS = [
     'rest_framework',
-    'simple_history',
-    'django_apscheduler',
+    'simple_history',   
 ]
-
 INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
 
 MIDDLEWARE = [
