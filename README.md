@@ -33,5 +33,5 @@ Check schedule logs in Table Log batterys of admin UI
 - http://localhost:8000/drones/check-loaded-medications/<serial_number>/ -> checking loaded medication items for a given drone;
 
 - http://localhost:8000/drones/medication -> List, Register
-- http://localhost:8000/drones/medication/<medication code>/ -> Detail, Update, Delete
+- http://localhost:8000/drones/medication/<med_code>/ -> Detail, Update, Delete
 
