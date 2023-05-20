@@ -93,7 +93,6 @@ def check_drone_battery(request, sn=None):
 
 @api_view(['GET'])
 def drone_available_loading(request):
-    print('aquiiiiiiiii')
     drones = Drone.objects.filter(status='IDLE')
     if drones:
         return Response({'drones': [d.__str__() for d in drones]}, status=status.HTTP_200_OK)
