@@ -81,3 +81,20 @@ def medication_detail_api_view(request, name=None):
             medication.delete()
             return Response({'message': 'Medication removed successfull.'}, status=status.HTTP_200_OK)
     return Response({'message': "Can't find Medication"}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['GET'])
+def check_drone_battery(request, sn=None):
+    drone = Drone.objects.filter(serial_number=sn).first()
+    if drone:
+        return Response({'battery': drone.get_battery_capacity()}, status=status.HTTP_200_OK)
+    return Response({'message': "Can't find Drone."}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['GET'])
+def drone_available_loading(request):
+    print('aquiiiiiiiii')
+    drones = Drone.objects.filter(status='IDLE')
+    if drones:
+        return Response({'drones': [d.__str__() for d in drones]}, status=status.HTTP_200_OK)
+    return Response({'message': "Not availables Drones"}, status=status.HTTP_404_NOT_FOUND)
