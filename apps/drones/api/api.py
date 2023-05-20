@@ -125,7 +125,12 @@ def loading_drone(request, sn=None):
 
 
 @api_view(['GET'])
-def loaded_medication_drone(request, sn=None):
+def check_loaded_medication_drone(request, sn=None):
     drone = Drone.objects.filter(serial_number=sn).first()
     if drone:
-        pass
+        medications = drone.medicationes.all()
+        if medications:
+            medi = [MedicationSerializer(m).data for m in drone.medicationes.all()]
+            return Response({"medications": medi}, status=status.HTTP_200_OK)
+        return Response({"medications": []}, status=status.HTTP_200_OK)
+    return Response({'message': "Can't find Drone."}, status=status.HTTP_404_NOT_FOUND)
