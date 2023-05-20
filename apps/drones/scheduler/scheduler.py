@@ -15,7 +15,7 @@ def check_battery_sattus():
 def start():
     scheduler = BackgroundScheduler()
     scheduler.add_jobstore(DjangoJobStore(), "default")
-    scheduler.add_job(check_battery_sattus, 'interval', hours=1, name='register_log', jobstore='default')
+    scheduler.add_job(check_battery_sattus, 'interval', minutes=3, name='register_log', jobstore='default')
     register_events(scheduler)
     scheduler.start()
     print("Scheduler started...", file=sys.stdout)
