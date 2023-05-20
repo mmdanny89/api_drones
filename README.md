@@ -25,7 +25,7 @@ password: admin123
 Check schedule logs in Table Log batterys of admin UI
 
 ## API REST Endpoints:
-- http://localhost:8000/drones/drone -> List, Register
+- http://localhost:8000/drones/drone/ -> List, Register
 - http://localhost:8000/drones/drone/<serial_number>/ -> Detail, Update, Delete
 - http://localhost:8000/drones/check-battery-level/<serial_number>/ -> check drone battery level for a given drone
 - http://localhost:8000/drones/availables/ -> checking available drones for loading;
