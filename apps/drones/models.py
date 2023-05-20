@@ -49,3 +49,6 @@ class Drone(models.Model):
 
     def get_battery_capacity(self):
         return str(self.battery_capacity) + '%'
+
+class LogBattery(models.Model):
+    log = models.JSONField(blank=False, null=False)
