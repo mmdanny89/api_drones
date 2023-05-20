@@ -1,0 +1,4 @@
+django~=4.2.1
+djangorestframework~=3.14.0
+django-apscheduler~=0.6.2
+django-simple-history~=3.3.0
