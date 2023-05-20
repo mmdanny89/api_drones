@@ -6,9 +6,9 @@ from  decimal import Decimal
 class Medication(models.Model):
     name_validator = RegexValidator(r'^[A-Za-z0-9_-]*$', 'Allowed only letters, numbers, - and _')
     code_validator = RegexValidator(r'^[A-Z0-9_]*$', 'Allowed only upper case letters, underscore and numbers')
-    name = models.CharField(max_length=50, unique=True, primary_key=True)
+    code = models.CharField(max_length=150, validators=[code_validator], unique=True, primary_key=True)
+    name = models.CharField(max_length=50, blank=False, null=False)
     weight = models.IntegerField(default=1, blank=False, null=False)
-    code = models.CharField(max_length=150, validators=[code_validator], blank=False)
     image = models.ImageField('PictureCase', upload_to='picturecase/', blank=True, null=True)
     
 
