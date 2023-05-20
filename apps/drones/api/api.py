@@ -5,6 +5,7 @@ from apps.drones.api.serializers import DroneSerializer
 from apps.drones.models import Drone
 from apps.drones.api.serializers import MedicationSerializer
 from apps.drones.models import Medication
+from django.db.models import Sum
 
 
 @api_view(['GET', 'POST']) 
@@ -17,10 +18,12 @@ def drone_api_view(request):
 
     if request.method == 'POST':
         drone_serializer = DroneSerializer(data=request.data)
-        if drone_serializer.is_valid():
-            drone_serializer.save()
-            return Response(drone_serializer.data, status=status.HTTP_201_CREATED)
-        return Response(drone_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        if not request.data.get('medicationes') and request.data.get('status') == 'IDLE':
+            if drone_serializer.is_valid():
+                drone_serializer.save()
+                return Response(drone_serializer.data, status=status.HTTP_201_CREATED)
+            return Response(drone_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'message':'Drone can by register with IDLE status and empty medicatios case.'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
@@ -97,3 +100,32 @@ def drone_available_loading(request):
     if drones:
         return Response({'drones': [d.__str__() for d in drones]}, status=status.HTTP_200_OK)
     return Response({'message': "Not availables Drones"}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['POST'])
+def loading_drone(request, sn=None):
+    medications_code = request.data.get('medications')
+    drone = Drone.objects.filter(serial_number=sn).first()
+    if drone:
+        if drone.battery_capacity >= 25:
+            if Medication.objects.filter(code__in=medications_code):
+                if Medication.objects.filter(code__in=medications_code).aggregate(Sum('weight'))['weight__sum'] <= drone.weight_limit:
+                    drone.status = 'LOADING'
+                    drone.save()
+                    for m in Medication.objects.filter(code__in=medications_code):
+                        drone.medicationes.add(m)
+                    drone.status = 'LOADED'
+                    drone.save()
+                    d_ser = DroneSerializer(drone)
+                    return Response(d_ser.data, status=status.HTTP_200_OK)
+                return Response({'message': "Drone overweight."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'message': "Invalid Medications code."}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'message': "Drone low battery."}, status=status.HTTP_400_BAD_REQUEST)
+    return Response({'message': "Can't find Drone."}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['GET'])
+def loaded_medication_drone(request, sn=None):
+    drone = Drone.objects.filter(serial_number=sn).first()
+    if drone:
+        pass
